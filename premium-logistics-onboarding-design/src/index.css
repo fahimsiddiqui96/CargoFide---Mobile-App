@@ -45,6 +45,23 @@ body {
   animation: kenburns 18s ease-in-out infinite;
 }
 
+
+/* Minimal drift — very subtle, precise pan only (no zoom) */
+@keyframes drift {
+  0% {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.06) translate3d(-0.8%, -1%, 0);
+  }
+  100% {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+}
+.animate-drift {
+  animation: drift 24s ease-in-out infinite;
+}
+
 /* Floating icon animations */
 @keyframes float-a {
   0%, 100% { transform: translateY(0) rotate(-6deg); }
@@ -75,6 +92,21 @@ body {
 }
 .animate-fade-up {
   animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Subtle fade — minimal, precise entrance */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in {
+  animation: fade-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* Live pulse dot */

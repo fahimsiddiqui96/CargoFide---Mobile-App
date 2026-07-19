@@ -3,18 +3,15 @@ import { BrandMark } from "../BrandMark";
 export function Slide1Welcome() {
   return (
     <div className="relative h-full w-full">
-      {/* Background video — cargo ship sailing with organic water displacement */}
+      {/* Background image — brightness lifted for better midtone visibility */}
       <div className="absolute inset-0 overflow-hidden">
-        <video
-          src="/videos/slide1-ship-voyage.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="absolute inset-0 h-full w-full object-cover"
+        <img
+          src="/images/cargo-ship.jpg"
+          alt="Cargo ship at sea"
+          className="absolute inset-0 h-full w-full origin-center animate-kenburns object-cover"
           draggable={false}
           style={{
+            objectPosition: "center 35%",
             filter: "brightness(1.12) contrast(1.08)",
           }}
         />
