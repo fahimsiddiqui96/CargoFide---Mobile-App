@@ -1,18 +1,15 @@
 import { BrandMark } from "../BrandMark";
+import worldMapImg from "../../assets/world-map.jpg";
 
 export function Slide2Global() {
   return (
     <div className="relative h-full w-full">
-      {/* Background video — aerial ship view with organic water displacement */}
+      {/* Background image — no brightness filter per user request */}
       <div className="absolute inset-0 overflow-hidden">
-        <video
-          src="/videos/slide2-global-voyage.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="absolute inset-0 h-full w-full object-cover"
+        <img
+          src={worldMapImg}
+          alt="Aerial ship view"
+          className="absolute inset-0 h-full w-full animate-kenburns object-cover"
           draggable={false}
         />
 

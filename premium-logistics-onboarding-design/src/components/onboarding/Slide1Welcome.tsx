@@ -1,4 +1,5 @@
 import { BrandMark } from "../BrandMark";
+import cargoShipImg from "../../assets/cargo-ship.jpg";
 
 export function Slide1Welcome() {
   return (
@@ -6,7 +7,7 @@ export function Slide1Welcome() {
       {/* Background image — brightness lifted for better midtone visibility */}
       <div className="absolute inset-0 overflow-hidden">
         <img
-          src="/images/cargo-ship.jpg"
+          src={cargoShipImg}
           alt="Cargo ship at sea"
           className="absolute inset-0 h-full w-full origin-center animate-kenburns object-cover"
           draggable={false}

@@ -1,24 +1,41 @@
 import { BrandMark } from "../BrandMark";
+import portCraneImg from "../../assets/port-crane.jpg";
 
 export function Slide3Automate() {
   return (
     <div className="relative h-full w-full">
+      {/* Background image — no brightness filter */}
       <div className="absolute inset-0 overflow-hidden">
         <img
-          src="/images/port-crane.jpg"
+          src={portCraneImg}
           alt="Port at dusk"
           className="absolute inset-0 h-full w-full animate-kenburns object-cover"
           draggable={false}
         />
+
+        {/* Top scrim — feathered, darkest at very top, fades to transparent below subline */}
         <div
-          className="absolute inset-0"
+          className="pointer-events-none absolute inset-x-0 top-0"
           style={{
+            height: "58%",
             background:
-              "linear-gradient(180deg, rgba(4,10,26,0.72) 0%, rgba(4,10,26,0.25) 30%, rgba(4,10,26,0.35) 60%, rgba(4,10,26,0.95) 100%)",
+              "linear-gradient(180deg, rgba(4,10,26,0.90) 0%, rgba(4,10,26,0.78) 10%, rgba(4,10,26,0.64) 20%, rgba(4,10,26,0.50) 30%, rgba(4,10,26,0.36) 40%, rgba(4,10,26,0.22) 52%, rgba(4,10,26,0.12) 62%, rgba(4,10,26,0.05) 72%, rgba(4,10,26,0.02) 82%, rgba(4,10,26,0) 92%)",
           }}
         />
+
+        {/* Bottom scrim — extended up for legibility over bright port */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.09] mix-blend-overlay"
+          className="pointer-events-none absolute inset-x-0 bottom-0"
+          style={{
+            height: "62%",
+            background:
+              "linear-gradient(0deg, rgba(4,10,26,0.94) 0%, rgba(4,10,26,0.86) 6%, rgba(4,10,26,0.76) 12%, rgba(4,10,26,0.66) 18%, rgba(4,10,26,0.54) 26%, rgba(4,10,26,0.44) 34%, rgba(4,10,26,0.34) 42%, rgba(4,10,26,0.26) 50%, rgba(4,10,26,0.18) 58%, rgba(4,10,26,0.11) 66%, rgba(4,10,26,0.06) 74%, rgba(4,10,26,0.02) 84%, rgba(4,10,26,0) 93%)",
+          }}
+        />
+
+        {/* Subtle grain — consistent with slides 1 & 2 */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-overlay"
           style={{
             backgroundImage:
               "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.65'/></svg>\")",
@@ -26,21 +43,32 @@ export function Slide3Automate() {
         />
       </div>
 
+      {/* Foreground content — top + bottom layout with bright center */}
       <div className="relative z-10 flex h-full w-full flex-col animate-fade-up">
-        <div className="flex items-center justify-between px-6 pt-3">
+        {/* Top bar: Logo left, badge right */}
+        <div className="flex items-center justify-between px-6" style={{ paddingTop: 64 }}>
           <BrandMark color="#FFFFFF" accent="#5AB5FF" size={26} />
-          <div className="rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[10px] font-semibold text-white/90 backdrop-blur-md">
-            AI · AUTOPILOT
+          <div className="rounded-full border border-white/20 bg-white/[0.12] px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-md">
+            24/7
           </div>
         </div>
 
+        {/* Text block */}
         <div className="mt-8 px-6">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-3 py-1.5 backdrop-blur-md">
-            <span className="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-white/80">
-              Zero paperwork
+          {/* Category pill with star icon — matches slides 1 & 2 */}
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.14] px-3 py-1.5 backdrop-blur-md">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1L7.5 4.5L11 5.2L8.5 7.8L9.1 11.3L6 9.6L2.9 11.3L3.5 7.8L1 5.2L4.5 4.5L6 1Z" fill="#5AB5FF" fillOpacity="0.9" />
+            </svg>
+            <span
+              className="font-semibold uppercase text-white"
+              style={{ fontSize: 10.5, letterSpacing: "0.14em" }}
+            >
+              End-to-End Support
             </span>
           </div>
 
+          {/* Hero heading — same type scale + serif-italic pattern */}
           <h1
             className="font-serif text-white"
             style={{
@@ -50,88 +78,46 @@ export function Slide3Automate() {
               fontWeight: 400,
             }}
           >
-            Docs, in{" "}
-            <span className="italic bg-gradient-to-r from-white via-sky-200 to-sky-400 bg-clip-text text-transparent">
-              seconds.
+            Support,{" "}
+            <span className="italic" style={{ color: "#B8E4FF" }}>
+              when you need it.
             </span>
           </h1>
 
-          <p className="mt-4 max-w-[300px] text-[14px] leading-[1.55] text-white/70">
-            Invoices, packing lists, BL drafts, HS codes — generated,
-            validated and filed by AI while you focus on scaling.
+          {/* Teal accent underline — flush-left, matches slides 1 & 2 */}
+          <div
+            className="mt-2 h-[5px] w-8 rounded-full"
+            style={{
+              background: "linear-gradient(90deg, #5AB5FF 0%, #34D399 100%)",
+            }}
+          />
+
+          {/* Subline — optional help, no "freight forwarding" */}
+          <p className="mt-4 max-w-[300px] text-[14px] leading-[1.55] text-white/90">
+            Need help with documentation or customs? Our team is on call.
           </p>
         </div>
 
-        {/* Doc stack */}
-        <div className="relative mx-auto mt-8 h-64 w-full max-w-[320px]">
-          {[
-            {
-              t: "Commercial Invoice",
-              s: "INV-2081 · Rotterdam",
-              tag: "SIGNED",
-              rot: -8,
-              y: 40,
-              x: -20,
-              delay: "0s",
-            },
-            {
-              t: "Packing List",
-              s: "PL-2081 · 24 CTNs",
-              tag: "READY",
-              rot: 4,
-              y: 8,
-              x: 10,
-              delay: "0.15s",
-            },
-            {
-              t: "Bill of Lading",
-              s: "MSKU 7742 · Draft",
-              tag: "AI DRAFT",
-              rot: -2,
-              y: -25,
-              x: -8,
-              delay: "0.3s",
-            },
-          ].map((d, i) => (
-            <div
-              key={d.t}
-              className="animate-fade-up absolute left-1/2 top-1/2 w-[240px] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/15 bg-white/[0.10] p-3.5 shadow-2xl backdrop-blur-xl"
-              style={{
-                transform: `translate(calc(-50% + ${d.x}px), calc(-50% + ${d.y}px)) rotate(${d.rot}deg)`,
-                zIndex: 10 + i,
-                animationDelay: d.delay,
-              }}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-sky-400 to-blue-600 text-white">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                      <path
-                        d="M6 3h9l4 4v14a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z"
-                        stroke="white"
-                        strokeWidth="1.6"
-                      />
-                      <path d="M14 3v5h5" stroke="white" strokeWidth="1.6" />
-                    </svg>
-                  </div>
-                  <div>
-                    <div className="text-[12px] font-semibold text-white">
-                      {d.t}
-                    </div>
-                    <div className="text-[10px] text-white/60">{d.s}</div>
-                  </div>
-                </div>
-                <span className="rounded-full bg-emerald-400/20 px-2 py-0.5 text-[8.5px] font-bold uppercase tracking-wider text-emerald-300">
-                  {d.tag}
+        {/* Bright center gap — port crane shows through */}
+        <div className="flex-1" />
+
+        {/* Support capabilities — within bottom scrim zone */}
+        <div className="px-6" style={{ marginBottom: 172 }}>
+          <div className="mb-2 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-white/80">
+            How we help
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {["Documentation", "Customs clearance", "Compliance", "HS codes", "Cargo insurance"].map(
+              (c) => (
+                <span
+                  key={c}
+                  className="rounded-full border border-white/20 bg-white/[0.12] px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-md"
+                >
+                  {c}
                 </span>
-              </div>
-              <div className="mt-3 space-y-1.5">
-                <div className="h-1.5 w-full rounded-full bg-white/10" />
-                <div className="h-1.5 w-[72%] rounded-full bg-white/10" />
-                <div className="h-1.5 w-[88%] rounded-full bg-white/10" />
-              </div>
-            </div>
-          ))}
+              )
+            )}
+          </div>
         </div>
       </div>
     </div>
