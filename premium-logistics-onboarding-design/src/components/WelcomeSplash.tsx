@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
+import cargoShipImg from "../assets/cargo-ship.jpg";
 
 interface WelcomeSplashProps {
   onFinished: () => void;
-  duration?: number; // ms before auto-dismiss
+  duration?: number;
 }
 
 export function WelcomeSplash({ onFinished, duration = 2500 }: WelcomeSplashProps) {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // Start fade-out 400ms before dismiss
     const fadeTimer = setTimeout(() => setFadeOut(true), duration - 400);
     const dismissTimer = setTimeout(onFinished, duration);
     return () => {
@@ -27,21 +27,31 @@ export function WelcomeSplash({ onFinished, duration = 2500 }: WelcomeSplashProp
         opacity: fadeOut ? 0 : 1,
       }}
     >
-      {/* Subtle ocean horizon — gradient at bottom */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0"
-        style={{
-          height: "40%",
-          background:
-            "linear-gradient(0deg, rgba(10,22,40,1) 0%, rgba(10,22,40,0.85) 30%, rgba(90,181,255,0.06) 65%, rgba(10,22,40,0) 100%)",
-        }}
-      />
+      {/* Background image */}
+      <div className="absolute inset-0 overflow-hidden">
+        <img
+          src={cargoShipImg}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+          draggable={false}
+          style={{
+            objectPosition: "center 35%",
+            filter: "brightness(0.55) contrast(1.05)",
+          }}
+        />
+        {/* Dark overlay for text legibility */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(10,22,40,0.55) 0%, rgba(10,22,40,0.82) 100%)",
+          }}
+        />
+      </div>
 
-      {/* CF monogram — constellation dot pattern */}
-      <div
-        className="relative animate-fade-up"
-        style={{ marginBottom: 24 }}
-      >
+      {/* Centered branding */}
+      <div className="relative z-10 flex flex-col items-center">
+        {/* CF monogram — same dot pattern as BrandMark */}
         <svg
           width="72"
           height="63"
@@ -50,8 +60,7 @@ export function WelcomeSplash({ onFinished, duration = 2500 }: WelcomeSplashProp
           xmlns="http://www.w3.org/2000/svg"
           className="drop-shadow-[0_4px_20px_rgba(90,181,255,0.45)]"
         >
-          {/* Dot radius */}
-          {/* "C" letter dots — curved arc opening to the right */}
+          {/* C dots */}
           <circle cx="26" cy="16" r="5.5" fill="#5AB5FF" />
           <circle cx="34" cy="12" r="5.5" fill="#5AB5FF" />
           <circle cx="42" cy="11" r="5.5" fill="#5AB5FF" />
@@ -67,8 +76,7 @@ export function WelcomeSplash({ onFinished, duration = 2500 }: WelcomeSplashProp
           <circle cx="16" cy="34" r="5.5" fill="#5AB5FF" />
           <circle cx="17" cy="26" r="5.5" fill="#5AB5FF" />
           <circle cx="20" cy="20" r="5.5" fill="#5AB5FF" />
-
-          {/* "F" letter dots */}
+          {/* F dots */}
           <circle cx="64" cy="11" r="5.5" fill="#5AB5FF" />
           <circle cx="72" cy="11" r="5.5" fill="#5AB5FF" />
           <circle cx="80" cy="11" r="5.5" fill="#5AB5FF" />
@@ -81,8 +89,7 @@ export function WelcomeSplash({ onFinished, duration = 2500 }: WelcomeSplashProp
           <circle cx="64" cy="59" r="5.5" fill="#5AB5FF" />
           <circle cx="72" cy="35" r="5.5" fill="#5AB5FF" />
           <circle cx="80" cy="35" r="5.5" fill="#5AB5FF" />
-
-          {/* Bottom connecting curve */}
+          {/* Bottom curve */}
           <circle cx="22" cy="68" r="5.5" fill="#5AB5FF" />
           <circle cx="30" cy="72" r="5.5" fill="#5AB5FF" />
           <circle cx="38" cy="75" r="5.5" fill="#5AB5FF" />
@@ -94,46 +101,33 @@ export function WelcomeSplash({ onFinished, duration = 2500 }: WelcomeSplashProp
           <circle cx="86" cy="68" r="5.5" fill="#5AB5FF" />
         </svg>
 
-        {/* Ambient glow behind icon */}
+        {/* Brand name */}
         <div
-          className="pointer-events-none absolute inset-0 -z-10"
+          className="mt-5 font-sans"
           style={{
-            background: "radial-gradient(circle, rgba(90,181,255,0.18) 0%, transparent 70%)",
-            transform: "scale(2.5)",
+            fontSize: 28,
+            fontWeight: 800,
+            color: "#FFFFFF",
+            letterSpacing: "-0.03em",
+            lineHeight: 1,
           }}
-        />
-      </div>
+        >
+          CargoFide
+        </div>
 
-      {/* Brand name */}
-      <div
-        className="animate-fade-up font-sans"
-        style={{
-          fontSize: 28,
-          fontWeight: 800,
-          color: "#FFFFFF",
-          letterSpacing: "-0.03em",
-          lineHeight: 1,
-          animationDelay: "100ms",
-          animationFillMode: "both",
-        }}
-      >
-        CargoFide
-      </div>
-
-      {/* Tagline */}
-      <div
-        className="animate-fade-up mt-2 font-sans"
-        style={{
-          fontSize: 11,
-          fontWeight: 500,
-          color: "rgba(255,255,255,0.45)",
-          letterSpacing: "0.12em",
-          textTransform: "uppercase",
-          animationDelay: "200ms",
-          animationFillMode: "both",
-        }}
-      >
-        Digital Freight Platform
+        {/* Tagline */}
+        <div
+          className="mt-2 font-sans"
+          style={{
+            fontSize: 11,
+            fontWeight: 500,
+            color: "rgba(255,255,255,0.45)",
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+          }}
+        >
+          Digital Freight Platform
+        </div>
       </div>
     </div>
   );
