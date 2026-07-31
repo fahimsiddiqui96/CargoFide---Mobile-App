@@ -1,44 +1,56 @@
 import { useState } from "react";
 import { PhoneFrame } from "./components/PhoneFrame";
 import { StatusBar } from "./components/StatusBar";
+import { WelcomeSplash } from "./components/WelcomeSplash";
 import { Slide1Welcome } from "./components/onboarding/Slide1Welcome";
 import { Slide2Global } from "./components/onboarding/Slide2Global";
 import { Slide3Automate } from "./components/onboarding/Slide3Automate";
 
 const SLIDES = [Slide1Welcome, Slide2Global, Slide3Automate];
 
+// Read ?slide=N from URL to support deep-linking into a specific slide
+function getInitialSlide(): number {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const s = params.get("slide");
+    if (s !== null) {
+      const n = parseInt(s, 10);
+      if (n >= 0 && n < SLIDES.length) return n;
+    }
+  } catch { /* ignore */ }
+  return 0;
+}
+
+// ?fullscreen renders without phone frame for actual mobile viewing
+function isFullscreen(): boolean {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("fullscreen") !== null;
+  } catch { return false; }
+}
+
 export default function App() {
-  const [index, setIndex] = useState(0);
+  const [showSplash, setShowSplash] = useState(true);
+  const [index, setIndex] = useState(getInitialSlide);
   const Slide = SLIDES[index];
   const isLast = index === SLIDES.length - 1;
+  const fullscreen = isFullscreen();
 
   const next = () => {
     if (isLast) {
-      // In the real app this would navigate into onboarding step 2 (Role picker etc.)
-      // For this preview we simply loop back to the start.
       setIndex(0);
     } else {
       setIndex((i) => i + 1);
     }
   };
 
-  const skip = () => setIndex(SLIDES.length - 1);
-
-  return (
-    <PhoneFrame>
-      {/* Status bar (over content, light) */}
-      <div className="absolute inset-x-0 top-0 z-40">
-        <StatusBar light />
-      </div>
-
-      {/* Skip button (top right, under status bar) */}
-      {!isLast && (
-        <button
-          onClick={skip}
-          className="absolute right-5 top-[54px] z-40 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-semibold text-white/85 backdrop-blur-md transition active:scale-95"
-        >
-          Skip
-        </button>
+  const content = (
+    <>
+      {/* Status bar (over content, light) — only in phone frame mode */}
+      {!fullscreen && (
+        <div className="absolute inset-x-0 top-0 z-40">
+          <StatusBar light />
+        </div>
       )}
 
       {/* Slide content — takes full frame */}
@@ -84,7 +96,7 @@ export default function App() {
             {/* Subtle shimmer */}
             <span className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/70 to-transparent opacity-60 animate-shimmer" />
             <span className="relative flex items-center gap-2">
-              {isLast ? "Get Started" : "Continue"}
+              Get Started
               <svg
                 width="18"
                 height="18"
@@ -103,18 +115,26 @@ export default function App() {
             </span>
           </button>
 
-          {/* Secondary line */}
-          <div className="mt-3.5 flex items-center justify-center gap-1 text-[12px] text-white/60">
-            <span>Already have an account?</span>
-            <button className="font-semibold text-white transition hover:text-sky-300">
-              Sign in
-            </button>
-          </div>
-
           {/* Home indicator */}
           <div className="mx-auto mt-4 h-[5px] w-[134px] rounded-full bg-white/70" />
         </div>
       </div>
+    </>
+  );
+
+  if (fullscreen) {
+    return (
+      <div className="fixed inset-0 h-dvh w-dvh w-screen overflow-hidden bg-black">
+        {showSplash && <WelcomeSplash onFinished={() => setShowSplash(false)} />}
+        {content}
+      </div>
+    );
+  }
+
+  return (
+    <PhoneFrame>
+      {showSplash && <WelcomeSplash onFinished={() => setShowSplash(false)} />}
+      {content}
     </PhoneFrame>
   );
 }
